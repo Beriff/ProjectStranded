@@ -1,0 +1,63 @@
+﻿{
+  "Anatomy": [
+    {
+      "Name": "Torso",
+      "Properties": [ 3 ],
+      "Parent": "",
+      "Children": [ "RightHand", "LeftHand", "RightLeg", "LeftLeg", "Head", "Heart" ],
+      "Health": 100,
+      "Vital": true
+    },
+
+    {
+      "Name": "RightHand",
+      "Properties": [ 0 ],
+      "Parent": "Torso",
+      "Children": [],
+      "Health": 20,
+      "Vital": false
+    },
+    {
+      "Name": "LeftHand",
+      "Properties": [ 0 ],
+      "Parent": "Torso",
+      "Children": [],
+      "Health": 20,
+      "Vital": false
+    },
+    {
+      "Name": "RightLeg",
+      "Properties": [ 4 ],
+      "Parent": "Torso",
+      "Children": [],
+      "Health": 40,
+      "Vital": false
+    },
+    {
+      "Name": "LeftLeg",
+      "Properties": [ 4 ],
+      "Parent": "Torso",
+      "Children": [],
+      "Health": 40,
+      "Vital": false
+    },
+    {
+      "Name": "Head",
+      "Properties": [ 1 ],
+      "Parent": "Torso",
+      "Children": [],
+      "Health": 60,
+      "Vital": true
+    },
+    {
+      "Name": "Heart",
+      "Properties": [ 2 ],
+      "Parent": "Torso",
+      "Children": [],
+      "Health": 10,
+      "Vital": true
+    }
+  ],
+  "Size": 5,
+  "Name":  "Humanoid"
+}

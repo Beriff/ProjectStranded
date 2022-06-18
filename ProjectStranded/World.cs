@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -42,6 +43,11 @@ namespace ProjectStranded
 				Grid[x, y].Draw(sb, atlas, offset + new Vector2(x * atlas.CellLengthX, y * atlas.CellLengthY));
 			});
 		}
+
+		public GridCell GetAt(Vector2 position)
+		{
+			return Grid[(int)position.X, (int)position.Y];
+		}
 	}
 	struct Camera
 	{
@@ -72,6 +78,14 @@ namespace ProjectStranded
 	{
 		public Dictionary<Vector2, Chunk> ChunkGrid;
 		public Camera MainCamera;
+		public Entity Player;
+		public InputHandler mInputHandler;
+		public void Update(KeyboardState kstate)
+		{
+			mInputHandler.Update(kstate);
+			ProcessInputs();
+			MainCamera.SetCenter((int)Player.Position.X, (int)Player.Position.Y);
+		}
 
 		public void Draw(SpriteBatch sb, Atlas atlas)
 		{
@@ -82,13 +96,36 @@ namespace ProjectStranded
 				kp.Value.Draw(sb, atlas, MainCamera.GetOffset() + kp.Key * new Vector2(pix_width, pix_height));
 			}
 		}
-
-		public World()
+		public GridCell? GetAtPos(Vector2 position)
 		{
+
+			Vector2 cellpos = position * 16;
+			Vector2 chunk_pos = new Vector2((float)Math.Floor(position.X / 16), (float)Math.Floor(position.Y / 16));
+			Vector2 chunk_cellpos = new Vector2(Util.mod((int)cellpos.X, Chunk.ChunkSizeX), Util.mod((int)cellpos.Y, Chunk.ChunkSizeY));
+			
+			if (ChunkGrid.ContainsKey(chunk_pos))
+				return ChunkGrid[chunk_pos].GetAt(chunk_cellpos);
+			else
+				return null;
+		}
+
+		public World(InputHandler ih)
+		{
+			mInputHandler = ih;
 			MainCamera = new Camera();
 			ChunkGrid = new Dictionary<Vector2, Chunk>();
+			Player = Entity.GetHumanoid("Joel");
 			ChunkGrid[Vector2.Zero] = new Chunk().debug_fill(new GridCell("grass", false, "floor", new CellDrawParams(Color.LightGreen, new Random())));
 			ChunkGrid[Vector2.UnitX] = new Chunk().debug_fill(new GridCell("farmland", false, "floor", new CellDrawParams(Color.White, new Random())));
+		}
+
+		private void ProcessInputs()
+		{
+			if(mInputHandler.IsPressed(Keys.D))
+			{
+				Player.Move(Vector2.UnitX, this);
+			}
+
 		}
 	}
 }

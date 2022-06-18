@@ -31,7 +31,7 @@ namespace ProjectStranded
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			TileAtlas = new Atlas(Content.Load<Texture2D>("atlas1"), "16 16 grass farmland wet_farmland stone");
 
-			MainWorld = new World();
+			MainWorld = new World(new InputHandler());
 			// TODO: use this.Content to load your game content here
 		}
 
@@ -41,6 +41,7 @@ namespace ProjectStranded
 				Exit();
 
 			// TODO: Add your update logic here
+			MainWorld.Update(Keyboard.GetState());
 
 			base.Update(gameTime);
 		}
