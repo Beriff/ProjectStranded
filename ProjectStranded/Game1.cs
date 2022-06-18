@@ -9,6 +9,9 @@ namespace ProjectStranded
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
+		private Atlas TileAtlas;
+		private World MainWorld;
+
 		public Game1()
 		{
 			_graphics = new GraphicsDeviceManager(this);
@@ -26,7 +29,9 @@ namespace ProjectStranded
 		protected override void LoadContent()
 		{
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
+			TileAtlas = new Atlas(Content.Load<Texture2D>("atlas1"), "16 16 grass farmland wet_farmland stone");
 
+			MainWorld = new World();
 			// TODO: use this.Content to load your game content here
 		}
 
@@ -44,7 +49,11 @@ namespace ProjectStranded
 		{
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			// TODO: Add your drawing code here
+			_spriteBatch.Begin();
+
+			MainWorld.Draw(_spriteBatch, TileAtlas);
+
+			_spriteBatch.End();
 
 			base.Draw(gameTime);
 		}

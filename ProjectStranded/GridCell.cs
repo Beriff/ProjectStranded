@@ -11,6 +11,7 @@ namespace ProjectStranded
 		//Change rendering color to a shade around this var (do not shade if ShadeAround == Color.White)
 		public Color ShadeAround;
 		public Random random;
+		public static int ShadeRange = 1;
 
 		public CellDrawParams(Color? shade, Random r)
 		{
@@ -23,16 +24,9 @@ namespace ProjectStranded
 			if (ShadeAround == Color.White)
 				return ShadeAround;
 
-			var shade = ShadeAround.ToVector3() + new Vector3(random.Next(-10, 10), random.Next(-10, 10), random.Next(-10, 10));
+			Vector3 shade;//= ShadeAround.ToVector3() + new Vector3(random.Next(-ShadeRange, ShadeRange), random.Next(-ShadeRange, ShadeRange), random.Next(-ShadeRange, ShadeRange));
+			shade = ShadeAround.ToVector3() / ((float)random.NextDouble() * 0.5f + 1);
 
-			if (shade.X > 255)
-				shade.X -= random.Next(10);
-
-			if (shade.Y > 255)
-				shade.Y -= random.Next(10);
-
-			if (shade.Z > 255)
-				shade.Z -= random.Next(10);
 
 			return new Color(shade);
 		}
